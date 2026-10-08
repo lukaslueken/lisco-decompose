@@ -1,0 +1,6938 @@
+{
+  "plan_id": "sweep_solver_cstr_paper",
+  "runs": [
+    {
+      "plan_run_id": "run_000",
+      "studies": [
+        "horizon",
+        "overlap",
+        "closed_loop"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_001",
+      "studies": [
+        "horizon"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "monolithic",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_002",
+      "studies": [
+        "horizon"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 2,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 10,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 60000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_003",
+      "studies": [
+        "horizon"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 2,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 20,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 120000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_004",
+      "studies": [
+        "horizon",
+        "smoothing"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 2,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_005",
+      "studies": [
+        "horizon"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 2,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 100,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 600000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_006",
+      "studies": [
+        "horizon"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 3,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 10,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 60000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_007",
+      "studies": [
+        "horizon"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 3,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 20,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 120000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_008",
+      "studies": [
+        "horizon"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 3,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_009",
+      "studies": [
+        "horizon"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 3,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 100,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 600000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_010",
+      "studies": [
+        "horizon"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 10,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 60000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_011",
+      "studies": [
+        "horizon"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 20,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 120000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_012",
+      "studies": [
+        "horizon"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 100,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 600000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_013",
+      "studies": [
+        "horizon"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "monolithic",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 10,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 60000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_014",
+      "studies": [
+        "horizon"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "monolithic",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 20,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 120000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_015",
+      "studies": [
+        "horizon"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "monolithic",
+        "model": {
+          "nr": 2,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 10,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 60000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_016",
+      "studies": [
+        "horizon"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "monolithic",
+        "model": {
+          "nr": 2,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 20,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 120000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_017",
+      "studies": [
+        "horizon"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "monolithic",
+        "model": {
+          "nr": 3,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 10,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 60000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_018",
+      "studies": [
+        "horizon"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "monolithic",
+        "model": {
+          "nr": 3,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 20,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 120000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_019",
+      "studies": [
+        "horizon"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "monolithic",
+        "model": {
+          "nr": 2,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_020",
+      "studies": [
+        "horizon"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "monolithic",
+        "model": {
+          "nr": 3,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_021",
+      "studies": [
+        "overlap"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 1,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_022",
+      "studies": [
+        "overlap"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 2,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_023",
+      "studies": [
+        "overlap"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 3,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_024",
+      "studies": [
+        "overlap"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 4,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_025",
+      "studies": [
+        "overlap"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 2,
+          "n_slide_steps": 2,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_026",
+      "studies": [
+        "overlap"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 4,
+          "n_slide_steps": 2,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_027",
+      "studies": [
+        "overlap"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 3,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_028",
+      "studies": [
+        "overlap"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 5,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_029",
+      "studies": [
+        "overlap"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 51,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 3,
+          "n_slide_steps": 2,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 306000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_030",
+      "studies": [
+        "overlap"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 51,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 2,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 306000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_031",
+      "studies": [
+        "overlap"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 51,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 3,
+          "n_slide_steps": 3,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 306000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_032",
+      "studies": [
+        "overlap"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 49,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 4,
+          "n_slide_steps": 3,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 294000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_033",
+      "studies": [
+        "overlap"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 49,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 4,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 294000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_034",
+      "studies": [
+        "overlap"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 6,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_035",
+      "studies": [
+        "overlap"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 6,
+          "n_slide_steps": 2,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_036",
+      "studies": [
+        "overlap"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 6,
+          "n_slide_steps": 4,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_037",
+      "studies": [
+        "overlap"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 51,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 6,
+          "n_slide_steps": 3,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 306000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_038",
+      "studies": [
+        "overlap"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 51,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 6,
+          "n_slide_steps": 5,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 306000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_039",
+      "studies": [
+        "smoothing"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 2,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.01,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_040",
+      "studies": [
+        "smoothing"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 2,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.001,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_041",
+      "studies": [
+        "smoothing"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 2,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.0001,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_042",
+      "studies": [
+        "smoothing"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 2,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 1e-05,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_043",
+      "studies": [
+        "smoothing"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 2,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 1e-06,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "all",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    },
+    {
+      "plan_run_id": "run_044",
+      "studies": [
+        "closed_loop"
+      ],
+      "status": "planned",
+      "config": {
+        "architecture": "decomposed",
+        "model": {
+          "nr": 5,
+          "dt": 1.0,
+          "V_R": 15.0,
+          "V_out": 1.0,
+          "k1": 2.0,
+          "k2": 2.0,
+          "delH1": -100.0,
+          "delH2": -50.0,
+          "Tr_in": 60.0,
+          "kA": 2.0,
+          "rho": 1.0,
+          "cp": 0.5,
+          "Ea1": 500.0,
+          "Ea2": 600.0,
+          "R_gas": 8.3145,
+          "Tj": 50.0
+        },
+        "nmpc": {
+          "N": 50,
+          "w_R": 10.0,
+          "w_S": 1.0,
+          "w_uA": 0.1,
+          "w_uB": 0.0,
+          "objective": "economic",
+          "setpoint_cR": null,
+          "setpoint_cS": null,
+          "print_level": 5,
+          "max_iter": 5000,
+          "ipopt_tol": 1e-10,
+          "x_scaling": {
+            "cA": [
+              0.0,
+              0.1
+            ],
+            "cB": [
+              0.0,
+              1.0
+            ],
+            "cR": [
+              0.0,
+              4.0
+            ],
+            "cS": [
+              0.0,
+              1.0
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_scaling": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          },
+          "x_bounds": {
+            "cA": [
+              0.0,
+              "inf"
+            ],
+            "cB": [
+              "-inf",
+              "inf"
+            ],
+            "cR": [
+              "-inf",
+              "inf"
+            ],
+            "cS": [
+              "-inf",
+              "inf"
+            ],
+            "Tr": [
+              20.0,
+              80.0
+            ]
+          },
+          "u_bounds": {
+            "uA": [
+              0.0,
+              1.5
+            ],
+            "uB": [
+              0.0,
+              1.5
+            ]
+          }
+        },
+        "nlp": {
+          "device": "cuda",
+          "dtype": "torch.float64",
+          "eps": 0.1,
+          "sigma": 0.01,
+          "rho": 0.01,
+          "regularize": true,
+          "n_threads": 16,
+          "distributed_KKT_functions": true
+        },
+        "nn": {
+          "n_hidden_layers": 2,
+          "n_neurons": 1024,
+          "act_fn": "gelu",
+          "output_act_fn": "linear",
+          "nn_dtype": "torch.float32"
+        },
+        "solver": {
+          "gamma": 0.1,
+          "convexification": false,
+          "norm_Fk_max": 100.0,
+          "jvp_linesearch": false
+        },
+        "predictor_path": null,
+        "decomposition": {
+          "n_nodes": 5,
+          "n_slide_steps": 1,
+          "overlap_merge_mode": "average"
+        },
+        "train": {
+          "N_epochs": 300000,
+          "batch_size": 256,
+          "lr": 0.0005,
+          "weight_decay": 0.0,
+          "use_amsgrad": true,
+          "resampling_strategy": "closed_loop",
+          "Tk_lim": 1e-16,
+          "n_steps_max_total": 1000,
+          "n_steps_max_no_improvement": 2,
+          "buffer_max_size": 1000,
+          "p_buffer": 0.5,
+          "p_fresh_min": 0.3,
+          "use_adaptive_clip_grad": true,
+          "print_frequency": 100,
+          "log_values": true,
+          "tf32": true,
+          "bf16": true
+        },
+        "save_dir": "results/solver_training"
+      }
+    }
+  ]
+}

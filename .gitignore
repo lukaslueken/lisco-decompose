@@ -1,0 +1,10 @@
+# CusADi checkout (cloned separately, see README)
+src/cusadi/
+
+# Generated outputs: run folders, datasets, weights, metrics, figures, tables
+results/
+
+# Python environment and caches
+.venv/
+__pycache__/
+*.pyc
